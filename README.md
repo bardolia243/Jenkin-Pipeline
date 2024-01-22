@@ -104,6 +104,5 @@ Contact
 For inquiries or suggestions, feel free to contact the project maintainer:
 
 Your Name
-Email: your.email@example.com
-LinkedIn: Your LinkedIn Profile
-GitHub: Your GitHub Profile
+Email: bardolia243@gmail.com
+FAIZAN BARDOLIA
