@@ -1,13 +1,13 @@
-# Project Name
+# Jenkins Pipeline Assignment - 1
 
-Brief description of your project.
+This project demonstrates how to set up a Jenkins pipeline that is triggered by Git pushes to the Develop branch. The pipeline pulls the Git content and stores it in a specific folder.
 
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Features](#features)
-- [Getting Started](#getting-started)
+- [Requirements](#requirements)
 - [Usage](#usage)
+- [Pipeline Configuration](#pipeline-configuration)
 - [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
@@ -15,36 +15,87 @@ Brief description of your project.
 
 ## Introduction
 
-Explain what your project is about and what problem it solves. Provide a high-level overview of its features and benefits.
+Explain the purpose of this Jenkins pipeline assignment. Briefly describe what the pipeline is expected to achieve and how it fits into the development workflow.
 
-## Features
+## Requirements
 
-- List key features of your project.
-- Highlight what makes your project unique.
+To run this Jenkins pipeline, you'll need:
 
-## Getting Started
+- Jenkins installed and configured.
+- A Git repository with a Develop branch.
+- Jenkins Git Plugin installed.
 
-Instructions on how to set up the project locally. Include prerequisites, installation steps, and any necessary configurations.
+## Usage
 
-```bash
-# Example command for installation
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
-npm install
+1. Clone this repository:
 
-Usage
-Describe how to use your project. Include examples, API references, or anything that would help someone understand how to use your project effectively.
+    ```bash
+    git clone https://github.com/your-username/your-repo.git
+    ```
+
+2. Change into the project directory:
+
+    ```bash
+    cd your-repo
+    ```
+
+3. Copy the Jenkinsfile to your project repository.
+
+4. Adjust the Jenkinsfile as needed, modifying the Git repository URL, branch, and target folder.
+
+5. Create a new pipeline project in Jenkins.
+
+6. Configure the pipeline to use the Jenkinsfile from your project repository.
+
+7. Set up a webhook in your Git repository to trigger the Jenkins pipeline on each push to the Develop branch.
+
+## Pipeline Configuration
+
+The Jenkins pipeline is configured using a Jenkinsfile. Adjust the stages, steps, and configurations in the Jenkinsfile based on your specific requirements.
+
+```groovy
+pipeline {
+    agent any
+
+    triggers {
+        // Trigger the pipeline on each push to the Develop branch
+        pollSCM('*/5 * * * *') // Poll every 5 minutes, adjust as needed
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from the Develop branch
+                checkout([$class: 'GitSCM', branches: [[name: '*/Develop']], userRemoteConfigs: [[url: 'your-git-repo-url']]])
+            }
+        }
+
+        stage('Pull Git Content') {
+            steps {
+                script {
+                    // Pull Git content to a specific folder
+                    sh 'mkdir -p target-folder'
+                    sh 'cp -R * target-folder/'
+                }
+            }
+        }
+
+        // Add more stages as needed
+    }
+
+    post {
+        success {
+            // Add post-build actions here
+        }
+    }
+}
+
 
 Contributing
-If you'd like to contribute to this project, follow these steps:
+Contributions are welcome! If you have ideas for improvements or new features, feel free to open an issue or submit a pull request.
 
-Fork the project.
-Create a new branch (git checkout -b feature/your-feature).
-Commit your changes (git commit -m 'Add some feature').
-Push to the branch (git push origin feature/your-feature).
-Open a pull request.
 License
-This project is licensed under the [Your License] License - see the LICENSE.md file for details.
+This project is licensed under the MIT License.
 
 Acknowledgments
 Mention any libraries, tools, or resources you used or were inspired by.
