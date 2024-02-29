@@ -1,4 +1,4 @@
-# Jenkins Pipeline Assignment - 1
+# Jenkins Pipeline
 
 This project demonstrates how to set up a Jenkins pipeline that is triggered by Git pushes to the Develop branch. The pipeline pulls the Git content and stores it in a specific folder.
 
